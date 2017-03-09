@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+        <title>Pi 1 Server Status</title>
+        <style>
+            .num {
+                font-size: 24pt;
+                font-weight: 500;
+            }
+            
+            small {
+                font-size: 15pt;
+            }
+            
+            .float-down {
+                position: absolute;
+                bottom: 0;
+            }
+            
+            @media (min-width: 768px) {
+                .row {
+                    position: relative;
+                }
+                .bottom-align-text {
+                    position: absolute;
+                    bottom: 0;
+                    /* right: 0; */
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <div style="background-color: #DDDDDD; margin-top: 30px; padding-top: 12px; margin-bottom: 30px; padding-bottom: 10px;">
+        <center>
+            <h1>Pi Server Status</h1>
+            <small>by Pencil Software</small>
+            <div id="loadingElement">
+                <i class="fa fa-refresh fa-spin fa-lg fa-fw"></i>
+                <span class="sr-only">Loading...</span>
+                <strong>Loading...</strong>
+            </div>
+        </center>
+    </div>
+    <div class="container">
+        <!-- DATA ROW -->
+        <div class="row">
+            <div class="col-sm-3">
+                <h3 style="text-align: center;">Processor Temperature</h3>
+            </div>
+            <div class="col-sm-3">
+                <h3 style="text-align: center;">Internal IP</h3>
+            </div>
+            <div class="col-sm-3">
+                <h3 style="text-align: center;">External IP</h3>
+            </div>
+            <div class="col-sm-3">
+                <h3 style="text-align: center;">Uptime</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <center><i class="fa fa-thermometer-three-quarters fa-2x"></i></center>
+            </div>
+            <div class="col-sm-3">
+                <center><i class="fa fa-map-marker fa-2x"></i>
+                </center>
+            </div>
+            <div class="col-sm-3">
+                <center><i class="fa fa-map-marker fa-2x"></i>
+                </center>
+            </div>
+            <div class="col-sm-3">
+                <center><i class="fa fa-clock-o fa-2x"></i></center>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <center>
+                    <div id="proc_temp_label" style="font-size: 24pt; font-weight: 500;"></div>
+                </center>
+                <div class="progress" style="margin-top: 0;">
+                    <div id="proc_temp" class="progress-bar" role="progressbar" style="width: 0%; height: 5px;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <center>
+                <div id="internalip" style="font-size: 24pt; font-weight: 500;"></div>
+            </center>
+        </div>
+        <div class="col-sm-3">
+            <center>
+                <div id="externalip" style="font-size: 24pt; font-weight: 500;"></div>
+            </center>
+        </div>
+        <div class="col-sm-3">
+            <div style="text-align: center;">
+                <span class="num" id="dys">
+                    ...
+                    </span><small>d</small>
+                <span class="num" id="hrs">
+                    ...
+                    </span><small>h</small>
+                <span class="num" id="mns">
+                    ...
+                    </span><small>m</small>
+            </div>
+        </div>
+    </div>
+   
+    <!-- //DATA ROW -->
+
+    
+        <!-- DATA ROW -->
+        <div class="row">
+            <div class="col-sm-3" style="margin-top: 20px;">
+                <h3 style="text-align: center;">Disk Usage</h3>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <center><i class="fa fa-hdd-o fa-2x"></i></center>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <center>
+                    <span id="hddused" style="font-size: 24pt; font-weight: 500;"></span>&nbsp; / &nbsp;
+                    <span id="hddmax" style="font-size: 20pt; font-weight: 500;"></span>
+                    <small>GB</small>
+                </center>
+                <div class="progress" style="margin-top: 0;">
+                    <div id="hdd_usage" class="progress-bar" role="progressbar" style="width: 0%; height: 5px;" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+    </div>
+    </div>
+    <!-- //DATA ROW -->
+	
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-bottom" style="background-color: #DDDDDD;" >
+		<a class="navbar-brand" href="#">Pi 1 Server Status</a>
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="../">Back to Navigation</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">View Source</a>
+      </li>
+	  </ul>
+	  <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-refresh fa-lg">&nbsp;</i>Refresh</button>
+    </form>
+    
+	</nav>
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+            <script src="./js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+            <script>
+                // Show loading Statusvar $loading = $('#loadingDiv').hide();
+                var $loading = $('#loadingElement').hide();
+                $(document)
+                    .ajaxStart(function () {
+                        $loading.show();
+                    })
+                    .ajaxStop(function () {
+                        $loading.hide();
+                    });
+            </script>
+
+            <script>
+                // Get the data
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", "getdata.php", false); // false for synchronous request
+                xmlHttp.send(null);
+                var result = xmlHttp.responseText;
+                result = JSON.parse(result);
+
+                function getData(id) {
+
+                    return result[id];
+                }
+            </script>
+            <script>
+			
+			function dodata() {
+			console.log("doesdata");
+                var proc_temp, proc_temp_max, proc_temp_min;
+
+                proc_temp = getData(0);
+                proc_temp_max = 40;
+                proc_temp_min = 30;
+                var proc_pct = 100 * ((proc_temp - proc_temp_min) / (proc_temp_max - proc_temp_min));
+
+                document.getElementById("proc_temp").style.width = proc_pct + "%";
+                document.getElementById("proc_temp_label").innerHTML = proc_temp + "&deg;C"
+
+                if (proc_pct >= 65 && proc_pct < 80) {
+                    $("#proc_temp").addClass("bg-warning");
+                } else if (proc_pct >= 80) {
+                    $("#proc_temp").addClass("bg-danger");
+                } else {
+                    $("#proc_temp").addClass("bg-success");
+                }
+
+                var internalip = getData(1);
+                document.getElementById("internalip").innerHTML = internalip;
+
+                var externalip = getData(2);
+                document.getElementById("externalip").innerHTML = externalip;
+
+                var days = getData(3)[0];
+                document.getElementById("dys").innerHTML = days;
+
+				
+				var mns = getData(3)[2];
+
+                var hrs = getData(3)[1];
+				if (hrs >= 24 && mns == "") {
+					mns = hrs;
+					hrs = 0;
+				} else if (mns == "") {
+					mns = 0;
+				}
+                document.getElementById("hrs").innerHTML = hrs;
+                document.getElementById("mns").innerHTML = mns;
+
+                var hddused = getData(4);
+                var hddmax = getData(5);
+
+                var hdd_pct = 100 * (hddused / hddmax);
+                document.getElementById("hdd_usage").style.width = hdd_pct + "%";
+                document.getElementById("hddused").innerHTML = hddused;
+                document.getElementById("hddmax").innerHTML = hddmax;
+
+                if (hdd_pct >= 65 && hdd_pct < 80) {
+                    $("#hdd_usage").addClass("bg-warning");
+                } else if (hdd_pct >= 80) {
+                    $("#hdd_usage").addClass("bg-danger");
+                } else {
+                    $("#hdd_usage").addClass("bg-success");
+                }
+				}
+				dodata();
+            </script>
+</body>
+
+</html>
