@@ -104,6 +104,14 @@
         </div>
         <div class="col-sm-3">
             <div style="text-align: center;">
+                <span class="num" id="yrs">
+                    ...
+                    </span><small>y</small>
+                
+                <span class="num" id="mts">
+                    ...
+                    </span><small>m</small>
+                
                 <span class="num" id="dys">
                     ...
                     </span><small>d</small>
@@ -230,9 +238,9 @@
                 proc_temp = getData(0);
                 proc_temp_max = 40;
                 proc_temp_min = 30;
-                var proc_pct = 100 * ((proc_temp - proc_temp_min) / (proc_temp_max - proc_temp_min));
+                var proc_pct  = 100 * ((proc_temp - proc_temp_min) / (proc_temp_max - proc_temp_min));
 
-                document.getElementById("proc_temp").style.width = proc_pct + "%";
+                document.getElementById("proc_temp")    .style.width = proc_pct  + "%";
                 document.getElementById("proc_temp_label").innerHTML = proc_temp + "&deg;C"
 
                 if (proc_pct >= 65 && proc_pct < 80) {
@@ -253,15 +261,15 @@
                 document.getElementById("dys").innerHTML = days;
 
 				
-				var mns = getData(3)[2];
+				var mns = getData(3)["minutes"];
+                var hrs = getData(3)["hours"  ];
+                var dys = getData(3)["days"   ];
+                var mts = getData(3)["months" ];
+                var yrs = getData(3)["years"  ];
 
-                var hrs = getData(3)[1];
-				if (hrs >= 24 && mns == "") {
-					mns = hrs;
-					hrs = 0;
-				} else if (mns == "") {
-					mns = 0;
-				}
+                document.getElementById("yrs").innerHTML = yrs;
+                document.getElementById("mts").innerHTML = mts;
+                document.getElementById("dys").innerHTML = dys;
                 document.getElementById("hrs").innerHTML = hrs;
                 document.getElementById("mns").innerHTML = mns;
 
